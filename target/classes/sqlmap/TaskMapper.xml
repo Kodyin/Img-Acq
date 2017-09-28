@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.dao.TaskMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.entity.Task" >
+    <id column="业务序号" property="业务序号" jdbcType="DECIMAL" />
+    <result column="业务类型" property="业务类型" jdbcType="VARCHAR" />
+    <result column="机器编号" property="机器编号" jdbcType="VARCHAR" />
+    <result column="办理人" property="办理人" jdbcType="VARCHAR" />
+    <result column="材料人" property="材料人" jdbcType="VARCHAR" />
+    <result column="是否本人" property="是否本人" jdbcType="VARCHAR" />
+    <result column="材料人身份证号" property="材料人身份证号" jdbcType="VARCHAR" />
+    <result column="办理人联系方式" property="办理人联系方式" jdbcType="VARCHAR" />
+    <result column="办理地址" property="办理地址" jdbcType="VARCHAR" />
+    <result column="头像图" property="头像图" jdbcType="VARCHAR" />
+    <result column="材料图" property="材料图" jdbcType="VARCHAR" />
+    <result column="时间" property="时间" jdbcType="VARCHAR" />
+    <result column="办理人身份证号" property="办理人身份证号" jdbcType="VARCHAR" />
+    <result column="材料人联系方式" property="材料人联系方式" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    业务序号, 业务类型, 机器编号, 办理人, 材料人, 是否本人, 材料人身份证号, 办理人联系方式, 办理地址, 头像图, 材料图, 时间, 办理人身份证号,
+    材料人联系方式
+  </sql>
+  <select id="selectCountByPrimaryKey" resultType="Long">
+    select
+    count(*)
+    from TASK
+    <where>
+      <if test="task.办理人 != null and task.办理人 != ''">
+        AND 办理人 = #{task.办理人}
+      </if>
+      <if test="task.材料人 != null and task.材料人 != ''">
+        AND 材料人 = #{task.材料人}
+      </if>
+      <if test="task.材料人身份证号 != null and task.材料人身份证号 != ''">
+        AND 材料人身份证号 = #{task.材料人身份证号}
+      </if>
+      <if test="task.办理人联系方式 != null and task.办理人联系方式 != ''">
+        AND 办理人联系方式 = #{task.办理人联系方式}
+      </if>
+      <if test="task.办理地址 != null and task.办理地址 != ''">
+        AND 办理地址 = #{task.办理地址}
+      </if>
+      <if test="task.办理人身份证号 != null and task.办理人身份证号 != ''">
+        AND 办理人身份证号 = #{task.办理人身份证号}
+      </if>
+      <if test="task.材料人联系方式 != null and task.材料人联系方式 != ''">
+        AND 材料人联系方式 = #{task.材料人联系方式}
+      </if>
+      <if test="task.业务类型 != null and task.业务类型 != ''">
+        AND 业务类型 = #{task.业务类型}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        AND 时间 &gt;=  #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND 时间 &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select * from
+    (
+    select A.*,ROWNUM RN
+    from(select * from TASK) A
+    <where>
+      <if test="task.办理人 != null and task.办理人 != ''">AND 办理人 = #{task.办理人}
+        </if>
+        <if test="
+        task.材料人 != null and task.材料人 != ''"
+        >
+          AND 材料人 = #{task.材料人}
+        </if>
+        <if test="
+        task.材料人身份证号 != null and task.材料人身份证号 != ''">
+          AND
+          材料人身份证号 = #{task.材料人身份证号}
+        </if>
+        <if test="
+      task.办理人联系方式 != null and task.办理人联系方式 != ''">
+          AND 办理人联系方式 = #{task.办理人联系方式}
+        </if>
+        <if
+                test="
+      task.办理地址 != null and task.办理地址 != ''">
+          AND 办理地址 = #{task.办理地址}
+        </if
+        >
+        <if test="
+      task.办理人身份证号 != null and task.办理人身份证号 != ''">
+          AND 办理人身份证号 = #{
+        task.办理人身份证号}
+        </if>
+        <if test=
+                    "task.材料人联系方式 != null and task.材料人联系方式 != ''">
+          AND 材料人联系方式 = #{
+      task.材料人联系方式}
+        </if>
+        <if test=" task.业务类型 != null and task.业务类型 != ''">
+          AND 业务类型 = #{task.业务类型}
+        </if>
+        <if test="
+        startTime != null and startTime != ''">
+          AND 时间
+          &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+          AND 时间 &lt;= #{endTime}
+        </if>
+    </where>
+    )
+    <if test="pageParam.pageSize!=0">
+    where RN BETWEEN #{pageParam.beginPageIndex}+1 AND #{pageParam.endPageIndex}
+    </if>
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TASK
+    where 业务序号 = #{业务序号,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.entity.Task" >
+    insert into TASK (业务序号, 业务类型, 机器编号,
+      办理人, 材料人, 是否本人, 材料人身份证号, 
+      办理人联系方式, 办理地址, 头像图, 
+      材料图, 时间, 办理人身份证号, 材料人联系方式
+      )
+    values (#{业务序号,jdbcType=DECIMAL}, #{业务类型,jdbcType=VARCHAR}, #{机器编号,jdbcType=VARCHAR},
+      #{办理人,jdbcType=VARCHAR}, #{材料人,jdbcType=VARCHAR}, #{是否本人,jdbcType=VARCHAR}, #{材料人身份证号,jdbcType=VARCHAR},
+      #{办理人联系方式,jdbcType=VARCHAR}, #{办理地址,jdbcType=VARCHAR}, #{头像图,jdbcType=VARCHAR}, 
+      #{材料图,jdbcType=VARCHAR}, #{时间,jdbcType=VARCHAR}, #{办理人身份证号,jdbcType=VARCHAR}, #{材料人联系方式,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.entity.Task" >
+    insert into TASK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="业务序号 != null" >
+        业务序号,
+      </if>
+      <if test="业务类型 != null" >
+        业务类型,
+      </if>
+      <if test="机器编号 != null" >
+        机器编号,
+      </if>
+      <if test="办理人 != null" >
+        办理人,
+      </if>
+      <if test="材料人 != null" >
+        材料人,
+      </if>
+      <if test="是否本人 != null" >
+        是否本人,
+      </if>
+      <if test="材料人身份证号 != null" >
+        材料人身份证号,
+      </if>
+      <if test="办理人联系方式 != null" >
+        办理人联系方式,
+      </if>
+      <if test="办理地址 != null" >
+        办理地址,
+      </if>
+      <if test="头像图 != null" >
+        头像图,
+      </if>
+      <if test="材料图 != null" >
+        材料图,
+      </if>
+      <if test="时间 != null" >
+        时间,
+      </if>
+      <if test="办理人身份证号 != null" >
+        办理人身份证号,
+      </if>
+      <if test="材料人联系方式 != null" >
+        材料人联系方式,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="业务序号 != null" >
+        #{业务序号,jdbcType=DECIMAL},
+      </if>
+      <if test="业务类型 != null" >
+        #{业务类型,jdbcType=VARCHAR},
+      </if>
+      <if test="机器编号 != null" >
+        #{机器编号,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人 != null" >
+        #{办理人,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人 != null" >
+        #{材料人,jdbcType=VARCHAR},
+      </if>
+      <if test="是否本人 != null" >
+        #{是否本人,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人身份证号 != null" >
+        #{材料人身份证号,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人联系方式 != null" >
+        #{办理人联系方式,jdbcType=VARCHAR},
+      </if>
+      <if test="办理地址 != null" >
+        #{办理地址,jdbcType=VARCHAR},
+      </if>
+      <if test="头像图 != null" >
+        #{头像图,jdbcType=VARCHAR},
+      </if>
+      <if test="材料图 != null" >
+        #{材料图,jdbcType=VARCHAR},
+      </if>
+      <if test="时间 != null" >
+        #{时间,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人身份证号 != null" >
+        #{办理人身份证号,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人联系方式 != null" >
+        #{材料人联系方式,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.entity.Task" >
+    update TASK
+    <set >
+      <if test="业务类型 != null" >
+        业务类型 = #{业务类型,jdbcType=VARCHAR},
+      </if>
+      <if test="机器编号 != null" >
+        机器编号 = #{机器编号,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人 != null" >
+        办理人 = #{办理人,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人 != null" >
+        材料人 = #{材料人,jdbcType=VARCHAR},
+      </if>
+      <if test="是否本人 != null" >
+        是否本人 = #{是否本人,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人身份证号 != null" >
+        材料人身份证号 = #{材料人身份证号,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人联系方式 != null" >
+        办理人联系方式 = #{办理人联系方式,jdbcType=VARCHAR},
+      </if>
+      <if test="办理地址 != null" >
+        办理地址 = #{办理地址,jdbcType=VARCHAR},
+      </if>
+      <if test="头像图 != null" >
+        头像图 = #{头像图,jdbcType=VARCHAR},
+      </if>
+      <if test="材料图 != null" >
+        材料图 = #{材料图,jdbcType=VARCHAR},
+      </if>
+      <if test="时间 != null" >
+        时间 = #{时间,jdbcType=VARCHAR},
+      </if>
+      <if test="办理人身份证号 != null" >
+        办理人身份证号 = #{办理人身份证号,jdbcType=VARCHAR},
+      </if>
+      <if test="材料人联系方式 != null" >
+        材料人联系方式 = #{材料人联系方式,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 业务序号 = #{业务序号,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.entity.Task" >
+    update TASK
+    set 业务类型 = #{业务类型,jdbcType=VARCHAR},
+      机器编号 = #{机器编号,jdbcType=VARCHAR},
+      办理人 = #{办理人,jdbcType=VARCHAR},
+      材料人 = #{材料人,jdbcType=VARCHAR},
+      是否本人 = #{是否本人,jdbcType=VARCHAR},
+      材料人身份证号 = #{材料人身份证号,jdbcType=VARCHAR},
+      办理人联系方式 = #{办理人联系方式,jdbcType=VARCHAR},
+      办理地址 = #{办理地址,jdbcType=VARCHAR},
+      头像图 = #{头像图,jdbcType=VARCHAR},
+      材料图 = #{材料图,jdbcType=VARCHAR},
+      时间 = #{时间,jdbcType=VARCHAR},
+      办理人身份证号 = #{办理人身份证号,jdbcType=VARCHAR},
+      材料人联系方式 = #{材料人联系方式,jdbcType=VARCHAR}
+    where 业务序号 = #{业务序号,jdbcType=DECIMAL}
+  </update>
+
+  <!--<select id="selectLike" resultMap="BaseResultMap" parameterType="java.lang.String">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from TASK-->
+    <!--where 业务类型 LIKE #{业务类型}-->
+  <!--</select>-->
+
+  <select id="selectLike" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from TASK
+    <where>
+      办理人 LIKE #{办理人}
+    </where>
+  </select>
+
+
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT  * from TASK
+  </select>
+
+  <select id="findNext" resultMap="BaseResultMap">
+    select 业务序号 from TASK where rownum=1 order by 业务序号 DESC
+  </select>
+
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from TASK
+    <where>
+      <if test="办理人 != null and 办理人 != ''">
+        AND 办理人 = #{办理人}
+      </if>
+      <if test="业务类型 != null and 业务类型 != ''">
+        AND 业务类型 = #{业务类型}
+      </if>
+      <if test="机器编号 != null and 机器编号 != ''">
+        AND 机器编号 = #{机器编号}
+      </if>
+      <if test="材料人 != null and 材料人 != ''">
+        AND 材料人 = #{材料人}
+      </if>
+      <if test="业务序号 != null and 业务序号 != ''">
+        AND 业务序号 = #{业务序号}
+      </if>
+      <if test="是否本人 != null and 是否本人 != ''">
+        AND 是否本人 = #{是否本人}
+      </if>
+      <if test="材料人身份证号 != null and 材料人身份证号 != ''">
+        AND 材料人身份证号 = #{材料人身份证号}
+      </if>
+      <if test="办理人联系方式 != null and 办理人联系方式 != ''">
+        AND 办理人联系方式 = #{办理人联系方式}
+      </if>
+      <if test="办理地址 != null and 办理地址 != ''">
+        AND 办理地址 = #{办理地址}
+      </if>
+      <if test="头像图 != null and 头像图 != ''">
+        AND 头像图 = #{头像图}
+      </if>
+      <if test="材料图 != null and 材料图 != ''">
+        AND 材料图 = #{材料图}
+      </if>
+      <if test="时间 != null and 时间 != ''">
+        AND 时间 = #{时间}
+      </if>
+      <if test="办理人身份证号 != null and 办理人身份证号 != ''">
+        AND 办理人身份证号 = #{办理人身份证号}
+      </if>
+      <if test="材料人联系方式 != null and 材料人联系方式 != ''">
+        AND 材料人联系方式 = #{材料人联系方式}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,13 @@
+table, th, td {
+    border: 1px solid #000;
+}
+/*表格中的文字上下左右居中*/
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*为了解决导出身份证时候，显示科学记数形式*/
+td {
+    mso-number-format: '\@';
+}
