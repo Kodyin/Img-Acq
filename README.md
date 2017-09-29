@@ -1,7 +1,8 @@
 # Web based Image Acquisition and Data Management System
 
-## The homepage of the web application is displayed below. 
-Its main purpose is to collect high resolution photo and sacn ID for the local ID administration.
+## Homepage displayed below. 
+Its main purpose is to collect high resolution photo, sacn ID and input relative information for the local ID administration. To communicate with the global oracle database, the information can be updated and well managed.
+
 ![Example](src/example.jpg)
 
 
