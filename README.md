@@ -1,4 +1,4 @@
-# Image Acquisition
+# Web based Image Acquisition and Data Management System
 
 ## The homepage of the web application is displayed below. Its main purpose is to collect high resolution photo and sacn ID
 for the local ID administration.
