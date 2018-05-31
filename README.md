@@ -12,11 +12,6 @@ This project focuses on integrating a high resolution cemera with the web ID/pho
 
 
 
-## Structure
-
-Built the web application on Tomcat Server with the help of Maven framework, Spring, Spring-MVC and MyBatis to manage data using Oracle database.
-
-
 ## Acknowledge
 This is a group project for a ID administration system prototype.
 
